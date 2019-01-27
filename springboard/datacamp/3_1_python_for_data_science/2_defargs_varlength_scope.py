@@ -1,3 +1,4 @@
+# SCOPE
 # In this exercise, you will practice what you've learned about scope in functions. The variable num has been predefined as 5, alongside the following function definitions:
 
 def func1():
@@ -59,3 +60,25 @@ In [2]: dir(builtins)
 # ..and getipython is in "builtins"...interesting.
 
 # Var assignments - unless you say Global or Nonlocal, of course is only local in scope.
+
+# DEFAULT ARGS
+# well, args(a_string, a_num=1) is pretty obvious, but, take all args is neater!
+def add_all(*args):
+    """Sum all values together"""
+    
+    #init
+    sum_all = 0
+    
+    # Accumulate sum
+    for num in args:
+        sum_all += num
+        
+    return sum_all
+    
+def take_in_all_key_word_pair_arguments(**kwargs):
+    """Print out key-value pairs in **kwargs"""
+    
+    # Print them!
+    for key, value in kwargs.items():
+        print(key + ": " + value)
+        

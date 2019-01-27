@@ -1,0 +1,30 @@
+WEEK 01 Datacamp Python warmups, course curriculum, mentor call
+WEEK 02 Holiday, not much of anything.
+WEEK 03 More Datacamp python warmups, Pandas warmup: correlation matrices of a sizeable Finnish postalcode geographic profile (about 200 vars, 3000 rows) - Pearson, Spearman, Kendall correlations back to memory, correlations with pandas (with results exports), some visualization with Seaborn - seemed clunky. See activities in repo: ~\dscipy_warmups\fingerwarmup\sdh-data-access-demo.py 
+WEEK 04 More Datacamp python warmups, logistic regression with NumPy, as requested.
+WEEK 05
+WEEK 06
+WEEK 07
+WEEK 08
+WEEK 09
+WEEK 10
+WEEK 11
+WEEK 12
+WEEK 13
+WEEK 14
+WEEK 15
+WEEK 16
+WEEK 17
+WEEK 18
+WEEK 19
+WEEK 20
+WEEK 21
+WEEK 22
+WEEK 23
+WEEK 24
+WEEK 25
+WEEK 26
+WEEK 27
+WEEK 28
+WEEK 29
+WEEK 30
