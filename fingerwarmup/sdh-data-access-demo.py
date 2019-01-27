@@ -170,8 +170,7 @@ print(type(correlation_kendall_to_file))
 
 # In[26]:
 
-
-correlation_kendall_to_file.to_csv("C:\\Users\\andro\\repositories\\sdh-alfa\\src\\lib\\scratch\\manne\\kendall_correlations_to_file.csv")
+correlation_kendall_to_file.to_csv("C:\\Users\\andro\\repositories\\dscipy_warmups\\fingerwarmup\\kendall_correlations_to_file.csv")
 
 
 # In[27]:
