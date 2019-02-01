@@ -1,0 +1,72 @@
+inhabitants_proportional_male is positively correlated with enlarging of postal code number.
+inhabitants_proportional_ age groups: old ages positively correlated with enlarging of postal code number.
+Kaikki absoluuttiset luvut pienenevät, varmista että olet laskenut oikein. En usko tuohon.
+
+area_sqm
+shape_lenght
+area_sqm_sea
+shape_lenght_sea
+korreloivat positiivisesti 
+
+households_occupancy_raten kanssa - miksi?
+Mitä suurempi alue, sitä enemmän asutaan...häh?
+0.257236607
+0.256414859
+0.26246375
+0.246393535
+
+Inhabitants male is negatively correlated to inhabitants proportional male?
+Inhabitants male is positively correlated to inhabitants proportional female?
+
+inhabitants_total negative correlation -0.482131348 to inhabitants_male - ei järkeä.
+
+sushi_datamart_population.hql sushi_datamart_presentation.hql sushi_ddl_datamart.hql
+
+MANNE DEMO
+median_income:
+
+postalcode number negatively correlated with med corr -> further we go from Helsinki, the poorer people are
+
+Median income of women is correlated more than that of men...
+inhabitant population density strong correlation (cities)
+education matriculation, university lower and higher is correlated.
+income_accumulated_disposable
+
+BP
+[
+ 'postalcode'
+,'inhabitants_population_density'
+,'households_total'
+,'education_upper_secondary'
+,'education_matriculation'
+,'education_vocational'
+,'education_university_lower'
+,'education_university_higher'
+,'households_avg_size' # 153 tyhjää. Huono.
+,'households_dwelling_own' # 155 tyhjää. Huono.
+,'households_young_couples' # 155 tyhjää. Huono.
+,'households_children'
+,'households_children_under_3'
+,'households_children_under_7'
+,'households_children_school'
+,'households_children_teen'
+,'households_adult'
+,'workplaces_proportional_primary_production' # 404 missing
+,'workplaces_industry_f' # 221 empty
+,'workplaces_industry_m' # 221 empty
+,'labor_force_employed' # 193
+,'labor_force_proportional_employed' # 193
+]
+
+...ok then a regression model with Pandas.
+If there are NaN:s in data, at least the module I used will throw error and fail 
+
+Seaborn:
+- Kernel density estimated combination plot!  https://seaborn.pydata.org/examples/joint_kde.html
+Scatterplot:
+median_income vs. age 
+hue education 
+size average income
+
+
+
