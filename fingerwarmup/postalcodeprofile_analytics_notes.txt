@@ -17,8 +17,7 @@ Mitä suurempi alue, sitä enemmän asutaan...häh?
 
 Inhabitants male is negatively correlated to inhabitants proportional male?
 Inhabitants male is positively correlated to inhabitants proportional female?
-
-inhabitants_total negative correlation -0.482131348 to inhabitants_male - ei järkeä.
+inhabitants_total negative correlation to inhabitants_male - ei järkeä.
 
 sushi_datamart_population.hql sushi_datamart_presentation.hql sushi_ddl_datamart.hql
 
@@ -31,6 +30,9 @@ Median income of women is correlated more than that of men...
 inhabitant population density strong correlation (cities)
 education matriculation, university lower and higher is correlated.
 income_accumulated_disposable
+
+
+
 
 BP
 [
@@ -69,4 +71,189 @@ hue education
 size average income
 
 
+inhabitants_proportional_female	
+inhabitants_proportional_male	
+inhabitants_proportional_age_0_2	
+inhabitants_proportional_age_3_6	
+inhabitants_proportional_age_7_12	
+inhabitants_proportional_age_13_15	
+inhabitants_proportional_age_16_17	
+inhabitants_proportional_age_18_19	
+inhabitants_proportional_age_20_24	
+inhabitants_proportional_age_25_29	
+inhabitants_proportional_age_30_34	
+inhabitants_proportional_age_35_39	
+inhabitants_proportional_age_40_44	
+inhabitants_proportional_age_45_49	
+inhabitants_proportional_age_50_54	
+inhabitants_proportional_age_55_59	
+inhabitants_proportional_age_60_64	
+inhabitants_proportional_age_65_69	
+inhabitants_proportional_age_70_74	
+inhabitants_proportional_age_75_79	
+inhabitants_proportional_age_80_84	
+inhabitants_proportional_age_85
+
+education_proportional_basic	
+education_proportional_upper_secondary	
+education_proportional_matriculation	
+education_proportional_vocational	
+education_proportional_university_lower	
+education_proportional_university_higher
+
+income_class_proportional_low	
+income_class_proportional_medium	
+income_class_proportional_high
+
+households_proportional_young_single	
+households_proportional_young_couples	
+households_proportional_children	
+households_proportional_children_under_3	households_proportional_children_under_7	
+households_proportional_children_school	
+households_proportional_children_teen	
+households_proportional_adult	
+households_proportional_pensioner	
+households_proportional_dwelling_own	
+households_proportional_dwelling_rental	
+households_proportional_dwelling_other
+households_income_class_proportional_low	households_income_class_proportional_med	
+households_income_class_proportional_hi
+buildings_proportional_other	
+buildings_proportional_residential
+
+buildings_dwellings_proportional_small	
+buildings_dwellings_proportional_blocks
+workplaces_proportional_industry_a	
+workplaces_proportional_industry_b	
+workplaces_proportional_industry_c	
+workplaces_proportional_industry_d	
+workplaces_proportional_industry_e	
+workplaces_proportional_industry_f	
+workplaces_proportional_industry_g	
+workplaces_proportional_industry_h	
+workplaces_proportional_industry_i	
+workplaces_proportional_industry_j	
+workplaces_proportional_industry_k	
+workplaces_proportional_industry_l	
+workplaces_proportional_industry_m	
+workplaces_proportional_industry_n	
+workplaces_proportional_industry_o	
+workplaces_proportional_industry_p	
+workplaces_proportional_industry_q	
+workplaces_proportional_industry_r	
+workplaces_proportional_industry_s	
+workplaces_proportional_industry_t	
+workplaces_proportional_industry_u	
+workplaces_proportional_industry_x
+labor_force_proportional_employed	
+labor_force_proportional_unemployed
+
+
+# TOTAL COLLECTION
+list(profile_df)
+
+​
+[
+ 'postalcode',
+ 'name',
+ 'municipality_number',
+ 'inhabitants_total',
+ 'inhabitants_female',
+ 'inhabitants_male',
+ 'inhabitants_avg_age',
+ 'inhabitants_age_0_2',
+ 'inhabitants_age_3_6',
+ 'inhabitants_age_7_12',
+ 'inhabitants_age_13_15',
+ 'inhabitants_age_16_17',
+ 'inhabitants_age_18_19',
+ 'inhabitants_age_20_24',
+ 'inhabitants_age_25_29',
+ 'inhabitants_age_30_34',
+ 'inhabitants_age_35_39',
+ 'inhabitants_age_40_44',
+ 'inhabitants_age_45_49',
+ 'inhabitants_age_50_54',
+ 'inhabitants_age_55_59',
+ 'inhabitants_age_60_64',
+ 'inhabitants_age_65_69',
+ 'inhabitants_age_70_74',
+ 'inhabitants_age_75_79',
+ 'inhabitants_age_80_84',
+ 'inhabitants_age_85',
+ 'inhabitants_population_density',
+ 'inhabitants_proportional_female',
+ 'inhabitants_proportional_male',
+ 'inhabitants_proportional_age_0_2',
+ 'inhabitants_proportional_age_3_6',
+ 'inhabitants_proportional_age_7_12',
+ 'inhabitants_proportional_age_13_15',
+ 'inhabitants_proportional_age_16_17',
+ 'inhabitants_proportional_age_18_19',
+ 'inhabitants_proportional_age_20_24',
+ 'inhabitants_proportional_age_25_29',
+ 'inhabitants_proportional_age_30_34',
+ 'inhabitants_proportional_age_35_39',
+ 'inhabitants_proportional_age_40_44',
+ 'inhabitants_proportional_age_45_49',
+ 'inhabitants_proportional_age_50_54',
+ 'inhabitants_proportional_age_55_59',
+ 'inhabitants_proportional_age_60_64',
+ 'inhabitants_proportional_age_65_69',
+ 'inhabitants_proportional_age_70_74',
+ 'inhabitants_proportional_age_75_79',
+ 'inhabitants_proportional_age_80_84',
+ 'inhabitants_proportional_age_85',
+ 'income_average',
+ 'income_median',
+ 'income_class_low',
+ 'income_class_medium',
+ 'income_class_high',
+ 'income_class_proportional_low',
+ 'income_class_proportional_medium',
+ 'income_class_proportional_high',
+ 'households_total',
+ 'households_avg_size',
+ 'households_occupancy_rate',
+ 'households_young_single',
+ 'households_young_couples',
+ 'households_children',
+ 'households_children_under_3',
+ 'households_children_under_7',
+ 'households_children_school',
+ 'households_children_teen',
+ 'households_adult',
+ 'households_pensioner',
+ 'households_dwelling_own',
+ 'households_dwelling_rental',
+ 'households_dwelling_other',
+ 'households_proportional_young_single',
+ 'households_proportional_young_couples',
+ 'households_proportional_children',
+ 'households_proportional_children_under_3',
+ 'households_proportional_children_under_7',
+ 'households_proportional_children_school',
+ 'households_proportional_children_teen',
+ 'households_proportional_adult',
+ 'households_proportional_pensioner',
+ 'households_proportional_dwelling_own',
+ 'households_proportional_dwelling_rental',
+ 'households_proportional_dwelling_other',
+ 'households_income_avg',
+ 'households_income_median',
+ 'households_income_class_low',
+ 'households_income_class_med',
+ 'households_income_class_hi',
+ 'households_income_class_proportional_low',
+ 'households_income_class_proportional_med',
+ 'households_income_class_proportional_hi',
+ 'households_income_accumulated',
+ 'buildings_freetime',
+ 'buildings_total',
+ 'buildings_other',
+ 'buildings_residential',
+ 'buildings_proportional_other',
+ 'buildings_proportional_residential',
+]
+Vuosi on Paavo-aineistonjulkaisuvuosi.Muuttujientilastovuosion ilmoitettusekätietoryhmänyleiskuvauksessa,että kunkinmuuttujanperässä.MuuttujankuvauskuntaTekninennimiKunta1.1.2019MuuttujannimiPostinumeroalueenkuntanumeromääräytyypinta-alanmukaan.Kahdenkunnanrajallaolevapostinumeroaluesaa sen kunnankuntanumeron,jonkapuolellasuurinosa postinumeroalueenpinta-alastasijaitsee.Kuntaon määriteltyMML2018-kuntakartta-aineistonmukaan(1:100000).Muuttujankuvaushe_vakiyTekninennimiAsukkaatyhteensä,2017(HE)MuuttujannimiAsukkaillatarkoitetaanalueellavakinaisestiasuvaaväestöä.Tämäon tietoryhmänkantaluku.Muuttujankuvaushe_miehetTekninennimiMiehet,2017(HE)MuuttujannimiAlueellavakinaisestiasuvatmiespuolisethenkilöt.Muuttujankuvaushe_naisetTekninennimiNaiset,2017(HE)MuuttujannimiAlueellavakinaisestiasuvatnaispuolisethenkilöt
 
