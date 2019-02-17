@@ -140,6 +140,35 @@ print(differences)
 #################################
 # Dicts
 #################################
+Init: {}
+
+released = {
+		"iphone" : 2007,
+		"iphone 3G" : 2008,
+		"iphone 3GS" : 2009,
+		"iphone 4" : 2010,
+		"iphone 4S" : 2011,
+		"iphone 5" : 2012
+	}
+print released
+
+Print all key and values
+
+for key,val in released.items():
+    print key, "=>", val
+    
+# Add a value to the dictionary
+# You can assign to an individual dictionary entry to add it or modify it
+
+#the syntax is: mydict[key] = "value"
+released["iphone 5S"] = 2013
+print released
+
+>>Output
+{'iphone 5S': 2013, 'iphone 3G': 2008, 'iphone 4S': 2011, 'iphone 3GS': 2009,
+'iphone': 2007, 'iphone 5': 2012, 'iphone 4': 2010}
+
+
 # Names
 for name in dict: print(name)
 
@@ -416,3 +445,137 @@ for date, stop, riders in entries:
     
 # Print the ridership for '03/09/2016'
 print(ridership['03/09/2016'])
+
+
+## AND ANOTHER, THIS ONE USING DEFAULTDICT
+
+# Import defaultdict
+from collections import defaultdict
+
+# Create a defaultdict with a default type of list: ridership
+ridership = defaultdict(list)
+
+# Iterate over the entries
+for date, stop, riders in entries:
+    # Use the stop as the key of ridership and append the riders to its value
+    if stop not in ridership:
+        ridership[stop] = []
+    ridership[stop].append(riders)
+    
+# Print the first 10 items of the ridership dictionary
+print(list(ridership.items())[:10])
+
+
+###### ordering 
+# yes, they are ordered, since 3.6 (2017)
+from collections import OrderedDict
+nyc_eatery_permits = OrderedDict()
+for eatery in nyc_eateries:
+    nyc_eatery_permits[eatery['end_date']] = eatery
+    
+print(list(nyc_eatery_permits.items())[:3]
+('2029-04-28', {'name': 'Union Square Seasonal Cafe',
+'location': 'Union Square Park', 'park_id': 'M089',
+'start_date': '2014-04-29', 'end_date': '2029-04-28', 
+'description': None, 'permit_number': 'M89-SB-R', 'phone': '212-677-7818', 
+'website': 'http://www.thepavilionnyc.com/', 'type_name': 'Restaurant'})
+
+# OrderedDict power feature:
+# .popitem() method returns items in reverse insertion order
+print(nyc_eatery_permits.popitem())
+('2029-04-28', {'name': 'Union Square Seasonal Cafe',
+'location': 'Union Square Park', 'park_id': 'M089',
+'start_date': '2014-04-29', 'end_date': '2029-04-28',
+'description': None, 'permit_number': 'M89-SB-R', 'phone': '212-677-7818',
+'website': 'http://www.thepavilionnyc.com/', 'type_name': 'Restaurant'})
+
+# You can use the last=False keyword argument to return the items in insertion order
+
+###########
+# Import OrderedDict from collections
+from collections import OrderedDict
+
+# Create an OrderedDict called: ridership_date
+ridership_date = OrderedDict()
+
+# Iterate over the entries
+for date, riders in entries:
+    # If a key does not exist in ridership_date, set it to 0
+    if date not in ridership_date:
+        ridership_date[date] = 0
+        
+    # Add riders to the date key in ridership_date
+    ridership_date[date] += riders
+    
+# Print the first 31 records
+print(list(ridership_date.items())[:31])
+
+
+# Print the first key in ridership_date
+print(list(ridership_date.keys())[0])
+
+# Pop the first item from ridership_date and print it
+print(ridership_date.popitem())
+
+# Print the last key in ridership_date
+print(list(ridership_date.keys())[-1])
+
+# Pop the last item from ridership_date and print it
+print(ridership_date.popitem(last=False))
+
+
+#### namedtuple
+alternative to pandas dataframe
+from collections import namedtuple
+
+from collections import namedtuple
+Eatery = namedtuple('Eatery', ['name', 'location', 'park_id',
+'type_name'])
+eateries = []
+for eatery in nyc_eateries:
+    details = Eatery(eatery['name'],
+                     eatery['location'],
+                     eatery['park_id'],
+                     eatery['type_name'])
+    eateries.append(details)
+   
+   
+print(eateries[0])
+Eatery(name='Mapes Avenue Ballfields Mobile Food Truck',
+location='Prospect Avenue, E. 181st Street',
+park_id='X289', type_name='Mobile Food Truck'
+
+for eatery in eateries[:3]:
+    print(eatery.name)
+    print(eatery.park_id)
+    print(eatery.location)
+
+### POPULATING NAMED TUPLE
+# Import namedtuple from collections
+from collections import namedtuple
+
+# Create the namedtuple: DateDetails
+DateDetails = namedtuple('DateDetails', ['date', 'stop', 'riders'])
+
+# Create the empty list: labeled_entries
+labeled_entries = []
+
+# Iterate over the entries
+for date, stop, riders in entries:
+    # Append a new DateDetails namedtuple instance for each entry to labeled_entries
+    labeled_entries.append(DateDetails(date, stop, riders))
+    
+# Print the first 5 items in labeled_entries
+print(labeled_entries[:5])
+
+
+# Iterate over the first twenty items in labeled_entries
+for item in labeled_entries[:20]:
+    # Print each item's stop
+    print(item.stop)
+
+    # Print each item's date
+    print(item.date)
+
+    # Print each item's riders
+    print(item.riders)
