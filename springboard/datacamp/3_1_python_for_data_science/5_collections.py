@@ -579,3 +579,12 @@ for item in labeled_entries[:20]:
 
     # Print each item's riders
     print(item.riders)
+
+############ NUMPY ARRAY SLICING RECAP
+slice = start:stop:stride
+no start e.g. [:20] = from start of array 
+no stop e.g. [20:] = implicitly at end 
+missing stride = stride = 1
+
+1d array: a[slice], 2d array A[slice0, slice1]
+negative -1 ..from end or backwards - 
