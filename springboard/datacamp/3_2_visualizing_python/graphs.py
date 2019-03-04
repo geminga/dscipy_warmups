@@ -468,6 +468,45 @@ sns.lmplot(x='weight', y='hp', data=auto, hue='origin',palette='Set1')
 # Display the plot
 plt.show()
 
+## grouping regressions!!!!!!!!!!!!!!!!!!
+# Plot linear regressions between 'weight' and 'hp' grouped row-wise by 'origin'
+sns.lmplot(x='weight', y='hp', data=auto, hue='origin',palette='Set1', row='origin')
+
+# Display the plot
+plt.show()
+
+## univariate plotting
+# Strip plot shows outliers well: 
+sns.stripplot(y= 'your_var', data=yourdataframe)
+plt.ylabel(' your label here')
+plt.show()
+
+# grouped stripplot:
+sns.stripplot(x='your_grouping_x_column_var', y='your_var_to_be_grouped', data=your_dataset)
+...horizontal jitter helps.
+
+# Swarm plot is even better 
+sns.swarmplot(x='your_grouping_x_column_var', y='your_var_to_be_grouped', data=your_dataset)
+plt.ylabel(' your label here')
+plt.show()
+
+# Swarm plot here with a hue sub-grouping and data as horizontal NOTE THE AXES!
+ns.swarmplot(x='your_var_to_be_grouped', y='your_grouping_column_var', data=your_dataset, hue='your_split', orient='h')
+plt.ylabel(' your label here')
+plt.show()
+
+# when lotsa data, (box plots) and violins
+# Violins use Kernel density estimates instead of blocky histograms!
+plt.subplot(1,2,1)
+sns.boxplot(x='your_grouping_column_var', y='your_var_to_be_grouped', data=your_dataset)
+plt.ylabel(' your label here')
+plt.subplot(1,2,2)
+sns.violinplot(x='your_grouping_column_var', y='your_var_to_be_grouped', data=your_dataset)
+plt.ylabel(' your label here')
+plt.tight_layout()
+plt.show()
+
+# swarmplot overlayed with violin
 
 
 ################## IDEAS!! POSTAL CODE PROFILE
@@ -476,3 +515,7 @@ plt.show()
 # 3) ...with residual plot 
 # 4) seaborn's hex-histogram
 
+sns.violinplot(x='your_grouping_column_var', y='your_var_to_be_grouped', data=your_dataset, inner=None, color='lightblue')
+sns.stripplot(x='your_grouping_x_column_var', y='your_var_to_be_grouped', data=your_dataset, size=4, jitter=True)
+plt.ylabel(' your label here')
+plt.show()
