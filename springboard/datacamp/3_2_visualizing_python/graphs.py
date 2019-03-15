@@ -1,5 +1,6 @@
 # GENERALLY - I wonder why anyone would use python visualizations, if one can avoid them?
 # PowerBI destroys all this. In an iPython notebook, yeah, sure.
+# well: Power BI does not have as good visualizations yet, the violinplots, kernel smoothing etc., don't shit on it.
 
 #################################
 # PLOTTING EXAMPLES
@@ -39,7 +40,7 @@ plt.show()
 
 
 #################################
-# "subplot" - vastly superior looking - 2x2 etc - this way plot clusters will end up looking superior 
+# "subplot" - vastly superior looking - 2x2 etc - this way plot clusters will end up looking superior
 
 
 # Create a figure with 1x2 subplot and make the left subplot active
@@ -69,7 +70,7 @@ plt.subplot(2,2,1)
 plt.plot(year, physical_sciences, color='blue')
 plt.title('Physical Sciences')
 
-# Make the top right subplot active in the current 2x2 subplot grid 
+# Make the top right subplot active in the current 2x2 subplot grid
 plt.subplot(2,2,2)
 
 # Plot in red the % of degrees awarded to women in Computer Science
@@ -100,7 +101,7 @@ plt.show()
 
 # Zooming to axis: one command gives the xlow, xhigh, ylow, yhigh
 plt.axis((1947,1957,0,600))
-# Check out axis commands, e.g. axis('equal'), 
+# Check out axis commands, e.g. axis('equal'),
 
 axis('off')
 axis('equal') # ensures that equal length
@@ -108,7 +109,7 @@ axis('square')
 axis('tight') # sets xlim(), ylim() to show all data
 
 # Plot the % of degrees awarded to women in Computer Science and the Physical Sciences
-plt.plot(year,computer_science, color='red') 
+plt.plot(year,computer_science, color='red')
 plt.plot(year, physical_sciences, color='blue')
 
 # Add the axis labels
@@ -147,15 +148,15 @@ plt.savefig('axis_limits.png')
 
 
 ##################################
-# legend() ! 
+# legend() !
 
 # ,,,,
 
 # Specify the label 'Computer Science'
-plt.plot(year, computer_science, color='red', label='Computer Science') 
+plt.plot(year, computer_science, color='red', label='Computer Science')
 
-# Specify the label 'Physical Sciences' 
-plt.plot(year, physical_sciences, color='blue', label='Physical Sciences') 
+# Specify the label 'Physical Sciences'
+plt.plot(year, physical_sciences, color='blue', label='Physical Sciences')
 
 
 # Add a legend at the lower center
@@ -169,9 +170,9 @@ plt.show()
 
 # ...it plotted the labels several times...this is borken
 
-################ ANNOTATE WITH ARROW ON HIGHEST POINT: 
+################ ANNOTATE WITH ARROW ON HIGHEST POINT:
 # Plot with legend as before
-plt.plot(year, computer_science, color='red', label='Computer Science') 
+plt.plot(year, computer_science, color='red', label='Computer Science')
 plt.plot(year, physical_sciences, color='blue', label='Physical Sciences')
 plt.legend(loc='lower right')
 
@@ -199,7 +200,7 @@ import matplotlib.pyplot as plt
 plt.style.use('ggplot')
 
 # Create a figure with 2x2 subplot layout
-plt.subplot(2, 2, 1) 
+plt.subplot(2, 2, 1)
 
 # Plot the enrollment % of women in the Physical Sciences
 plt.plot(year, physical_sciences, color='blue')
@@ -246,7 +247,7 @@ v = np.linspace(-1, 1, 21)
 X,Y = np.meshgrid(u, v)
 
 # Compute Z based on X and Y
-Z = np.sin(3*np.sqrt(X**2 + Y**2)) 
+Z = np.sin(3*np.sqrt(X**2 + Y**2))
 
 # Display the resulting image with pcolor()
 plt.pcolor(Z)
@@ -285,15 +286,15 @@ plt.pcolor(A, cmap='Blues')
 plt.colorbar()
 plt.show()
 
-# p-colour = pseudocolor (?) - 
-import numpy as np 
-import matplotlib.pyplot as plt 
+# p-colour = pseudocolor (?) -
+import numpy as np
+import matplotlib.pyplot as plt
 u = np.linspace(-2, 2, 65)
 v = np.linspace(-1, 1, 33)
 X,Y = np.meshgrid(u, v)
 Z = X**2/25 + Y**2/4
 plt.pcolor(Z)
-plt.pcolor(Z, cmap= 'autumn') 
+plt.pcolor(Z, cmap= 'autumn')
 plt.colorbar()
 # plt.axis('tight') - kato mitä tää tekee
 plt.show()
@@ -301,7 +302,7 @@ plt.show()
 # check out other cmaps - documentatoin here
 https://matplotlib.org/examples/color/colormaps_reference.html
 
-# contour plots better for continuous vars 
+# contour plots better for continuous vars
 
 plt.pcolor(X, Y, Z) # X, Y are 2D mesh grid
 plt.colorbar()
@@ -310,16 +311,16 @@ plt.show()
 plt.contour(Z)
 plt.show()
 
-# n of contours 
+# n of contours
 plt.contour(Z, 30)
 plt.show()
 
 # FILLED filled contour - it just has "f" there in addition
-plt.contourf(X, Y, Z, 30) 
+plt.contourf(X, Y, Z, 30)
 plt.colorbar()
 plt.show()
 
-# MOAR: 
+# MOAR:
 matplotlib.pyplot documentation
 http://matplotlib.org/gallery.html
 
@@ -380,7 +381,7 @@ plt.show()
 # histograms - bins
 plt.hist2d(x, y, bins=(10, 20))
 
-# about the syntax below: 
+# about the syntax below:
 #           x  y         x , y         xmin, xmax, ymin, ymax
 plt.hist2d(hp, mpg, bins=(20,20), range=((40, 235), (8, 48)))
 
@@ -394,11 +395,11 @@ plt.title('hist2d() plot')
 plt.show()
 
 ### SAME AS HEXPLOT
-# why hex? 
+# why hex?
 # https://cran.r-project.org/web/packages/hexbin/vignettes/hexagon_binning.pdf
 # Generate a 2d histogram with hexagonal bins
 plt.hexbin(hp, mpg, gridsize=(15,12), extent=((40, 235, 8, 48)))
-           
+
 # Add a color bar to the histogram
 plt.colorbar()
 
@@ -408,8 +409,8 @@ plt.ylabel('Miles per gallon [mpg]')
 plt.title('hexbin() plot')
 plt.show()
 
-# scatterplot 
-# 2-D histogram is very cool! Shows concentration of 
+# scatterplot
+# 2-D histogram is very cool! Shows concentration of
 # data with colour as an additional dimension
 
 ########## SEABORN
@@ -420,7 +421,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-#### A regression: 
+#### A regression:
 # Import plotting modules
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -431,7 +432,7 @@ sns.lmplot(x='weight', y='hp', data=auto)
 # Display the plot
 plt.show()
 
-#### Residual plot 
+#### Residual plot
 # Import plotting modules
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -476,7 +477,7 @@ sns.lmplot(x='weight', y='hp', data=auto, hue='origin',palette='Set1', row='orig
 plt.show()
 
 ## univariate plotting
-# Strip plot shows outliers well: 
+# Strip plot shows outliers well:
 sns.stripplot(y= 'your_var', data=yourdataframe)
 plt.ylabel(' your label here')
 plt.show()
@@ -485,13 +486,13 @@ plt.show()
 sns.stripplot(x='your_grouping_x_column_var', y='your_var_to_be_grouped', data=your_dataset)
 ...horizontal jitter helps.
 
-# Swarm plot is even better 
+# Swarm plot is even better
 sns.swarmplot(x='your_grouping_x_column_var', y='your_var_to_be_grouped', data=your_dataset)
 plt.ylabel(' your label here')
 plt.show()
 
 # Swarm plot here with a hue sub-grouping and data as horizontal NOTE THE AXES!
-ns.swarmplot(x='your_var_to_be_grouped', y='your_grouping_column_var', data=your_dataset, hue='your_split', orient='h')
+sns.swarmplot(x='your_var_to_be_grouped', y='your_grouping_column_var', data=your_dataset, hue='your_split', orient='h')
 plt.ylabel(' your label here')
 plt.show()
 
@@ -507,15 +508,466 @@ plt.tight_layout()
 plt.show()
 
 # swarmplot overlayed with violin
-
-
-################## IDEAS!! POSTAL CODE PROFILE
-# 1) heatmap of correlations, so that it actually works 
-# 2) regression plots of correlating variables...grouped by...year?
-# 3) ...with residual plot 
-# 4) seaborn's hex-histogram
-
 sns.violinplot(x='your_grouping_column_var', y='your_var_to_be_grouped', data=your_dataset, inner=None, color='lightblue')
 sns.stripplot(x='your_grouping_x_column_var', y='your_var_to_be_grouped', data=your_dataset, size=4, jitter=True)
 plt.ylabel(' your label here')
 plt.show()
+
+
+# Make a strip plot of 'hp' grouped by 'cyl'
+plt.subplot(2,1,1)
+sns.stripplot(x='cyl', y='hp', data=auto)
+
+# Make the strip plot again using jitter and a smaller point size
+plt.subplot(2,1,2)
+sns.stripplot(x='cyl', y='hp', data=auto, size=3, jitter=True)
+
+# Display the plot
+plt.show()
+
+
+
+### plot groups with both matplotlib and sns
+# Generate a swarm plot of 'hp' grouped horizontally by 'cyl'
+plt.subplot(2,1,1)
+sns.swarmplot(x='cyl', y='hp', data=auto)
+
+# Generate a swarm plot of 'hp' grouped vertically by 'cyl' with a hue of 'origin'
+plt.subplot(2,1,2)
+sns.swarmplot(x='hp', y='cyl', data=auto, hue='origin', orient='h')
+
+# Display the plot
+plt.show()
+
+
+### Grouped violin plots
+# Generate a violin plot of 'hp' grouped horizontally by 'cyl'
+plt.subplot(2,1,1)
+sns.violinplot(x='cyl', y='hp', data=auto)
+
+# Generate the same violin plot again with a color of 'lightgray' and without inner annotations
+plt.subplot(2,1,2)
+sns.violinplot(x='cyl', y='hp', data=auto, inner=None, color='lightgray')
+
+# Overlay a strip plot on the violin plot
+sns.stripplot(x='cyl', y='hp', data=auto, size=1.5, jitter=True)
+
+# Display the plot
+plt.show()
+
+
+### Bivariate and Multivariate
+# KDE surface "kind='kde"
+# pair plot with a hue for data sub-groups too
+sns.pairplot(your_pandas_dataframe, hue='your grouping var')
+plt.show()
+
+### Covariance heatmap
+sns.heatmap(your_covariance_matrix)
+plt.title('sun title')
+plt.show()
+
+########################
+### Plotting joint distributions:
+# Jointplot
+
+# Generate a joint plot of 'hp' and 'mpg'
+sns.jointplot('hp', 'mpg', data=auto)
+
+# Display the plot
+plt.show()
+
+
+########### the "kind" -parameter
+# kind='scatter' uses a scatter plot of the data points
+# kind='reg' uses a regression plot (default order 1)
+# kind='resid' uses a residual plot
+# kind='kde' uses a kernel density estimate of the joint distribution
+# kind='hex' uses a hexbin plot of the joint distribution
+
+sns.jointplot('hp', 'mpg', data=auto, kind='hex')
+plt.show()
+
+
+sns.jointplot('hp', 'mpg', data=auto, kind='scatter')
+plt.show()
+
+sns.jointplot('hp', 'mpg', data=auto, kind='reg')
+plt.show()
+
+sns.jointplot('hp', 'mpg', data=auto, kind='resid')
+plt.show()
+
+sns.jointplot('hp', 'mpg', data=auto, kind='kde')
+plt.show()
+
+###### just a pairplot
+# Print the first 5 rows of the DataFrame
+print(auto.head())
+
+# Plot the pairwise joint distributions from the DataFrame
+sns.pairplot(auto)
+
+# Display the plot
+plt.show()
+
+
+###### with hue groouping data
+# Print the first 5 rows of the DataFrame
+print(auto.head())
+
+# Plot the pairwise joint distributions grouped by 'origin' along with regression lines
+sns.pairplot(auto, kind='reg', hue='origin')
+
+# Display the plot
+plt.show()
+
+#### covariance matrix
+# Print the covariance matrix
+print(cov_matrix)
+
+# Visualize the covariance matrix using a heatmap
+sns.heatmap(cov_matrix)
+
+# Display the heatmap
+plt.show()
+
+################## timeseries plotting
+### pandas dataframes can be sliced with timestrings!!!!
+### You can slice subsets corresponding to different time intervals from a time series. In particular, you can use strings like '2001:2005', '2011-03:2011-12', or '2010-04-19:2010-04-30' to extract data from time intervals of length 5 years, 10 months, or 12 days respectively.
+
+Datetime as index
+# e.g.
+weather['2010-03']
+weather['2010-03-10']
+weather['2010-03-10':'2010-05-10']
+
+## EXAMPLE TIMESERIES:
+# Note that when combining timeseries, all you need to do
+# is collect the lines and then say "show()" for the plot
+
+
+# Import matplotlib.pyplot
+import matplotlib.pyplot as plt
+
+# Plot the aapl time series in blue
+plt.plot(aapl, color='blue', label='AAPL')
+
+# Plot the ibm time series in green
+plt.plot(ibm, color='green', label='IBM')
+
+# Plot the csco time series in red
+plt.plot(csco, color='red', label='CSCO')
+
+# Plot the msft time series in magenta
+plt.plot(msft, color='magenta', label='MSFT')
+
+# Add a legend in the top left corner of the plot
+plt.legend(loc='upper left')
+
+# Specify the orientation of the xticks
+plt.xticks(rotation=60)
+
+# Display the plot
+plt.show()
+
+#### 2 timeseries on top of each other
+# Plot the series in the top subplot in blue
+plt.subplot(2,1,1)
+plt.xticks(rotation=45)
+plt.title('AAPL: 2001 to 2011')
+plt.plot(aapl, color='blue')
+
+# Slice aapl from '2007' to '2008' inclusive: view
+view = aapl['2007':'2008']
+
+# Plot the sliced data in the bottom subplot in black
+# weirdness...the xtick labels now contain months too, in above just years. Why? ...the labels come automagically with the slice.
+
+plt.subplot(2,1,2)
+plt.xticks(rotation=45)
+plt.title('AAPL: 2007 to 2008')
+plt.plot(view, color='black')
+plt.tight_layout()
+plt.show()
+
+### 2 on top of each other, this time slicing from month to day.
+# Slice aapl from Nov. 2007 to Apr. 2008 inclusive: view
+view = aapl['2007-11':'2008-04']
+
+# Plot the sliced series in the top subplot in red
+plt.subplot(2,1,1)
+plt.xticks(rotation=45)
+plt.title('AAPL: Nov. 2007 to Apr. 2008')
+plt.plot(view, color='red')
+
+# Reassign the series by slicing the month January 2008
+view = aapl['2008-01']
+
+# Plot the sliced series in the bottom subplot in green
+plt.subplot(2,1,2)
+plt.xticks(rotation=45)
+plt.title('AAPL: Jan. 2008')
+plt.plot(view, color='green')
+
+# Improve spacing and display the plot
+plt.tight_layout()
+plt.show()
+
+#### Tässä on fokusgraafi graafin sisällä - todella kova
+
+# Slice aapl from Nov. 2007 to Apr. 2008 inclusive: view
+view = aapl['2007-11':'2008-04']
+
+# Plot the entire series
+plt.plot(aapl)
+plt.xticks(rotation=45)
+plt.title('AAPL: 2001-2011')
+
+# Specify the axes
+# lower left corner (0.25, 0.5), width 0.35, and height 0.35
+plt.axes([0.25, 0.5, 0.35, 0.35])
+
+# Plot the sliced series in red using the current axes
+plt.plot(view, color='red')
+plt.xticks(rotation=45)
+plt.title('2007/11-2008/04')
+plt.show()
+
+### DataCamp platform went bork...
+
+### timeseries with measures of central tendecies..windowed too.
+## Moving standard deviations..4-graphs showing the deviation of longer windowed averages
+# Plot the 30-day moving average in the top left subplot in green
+plt.subplot(2,2,1)
+plt.plot(mean_30, 'green')
+plt.plot(aapl, 'k-.')
+plt.xticks(rotation=60)
+plt.title('30d averages')
+
+# Plot the 75-day moving average in the top right subplot in red
+plt.subplot(2,2,2)
+plt.plot(mean_75, 'red')
+plt.plot(aapl, 'k-.')
+plt.xticks(rotation=60)
+plt.title('75d averages')
+
+# Plot the 125-day moving average in the bottom left subplot in magenta
+plt.subplot(2, 2, 3)
+plt.plot(mean_125, 'magenta')
+plt.plot(aapl, 'k-.')
+plt.xticks(rotation=60)
+plt.title('125d averages')
+
+# Plot the 250-day moving average in the bottom right subplot in cyan
+plt.subplot(2, 2, 4)
+plt.plot(mean_250, 'cyan')
+plt.plot(aapl, 'k-.')
+plt.xticks(rotation=60)
+plt.title('250d averages')
+
+# Display the plot
+plt.show()
+
+####### Lines in same graph, with legend in upper left
+# Plot std_30 in red
+plt.plot(std_30, 'red', label='30d')
+
+# Plot std_75 in cyan
+plt.plot(std_75, 'cyan', label='75d')
+
+# Plot std_125 in green
+plt.plot(std_125, 'green', label='125d')
+
+# Plot std_250 in magenta
+plt.plot(std_250, 'magenta', label='250d')
+
+# Add a legend to the upper left
+plt.legend(loc='upper left')
+
+# Add a title
+plt.title('Moving standard deviations')
+
+# Display the plot
+plt.show()
+
+### image histograms
+orig = plt.imread('your_image.png')
+pixels = orig.flatten()
+plt.hist(pixels, bins=256, range(0,256), normed=True, color='blue', alpha=0.3)
+plt.show()
+
+### example
+# Load the image into an array: image
+image = plt.imread('640px-Unequalized_Hawkes_Bay_NZ.jpg')
+
+# Display image in top subplot using color map 'gray'
+plt.subplot(2,1,1)
+plt.title('Original image')
+plt.axis('off')
+plt.imshow(image, cmap='gray')
+
+# Flatten the image into 1 dimension: pixels
+pixels = image.flatten()
+
+# Display a histogram of the pixels in the bottom subplot
+plt.subplot(2,1,2)
+plt.xlim((0,255))
+plt.title('Normalized histogram')
+plt.hist(pixels, bins=64, range=(0,256), normed=True, color='red', alpha=0.4)
+
+# Display the plot
+plt.show()
+
+## image histograms. (I will never use this stuff...)
+# Load the image into an array: image
+image = plt.imread('640px-Unequalized_Hawkes_Bay_NZ.jpg')
+
+# Display image in top subplot using color map 'gray'
+plt.subplot(2,1,1)
+plt.imshow(image, cmap='gray')
+plt.title('Original image')
+plt.axis('off')
+
+# Flatten the image into 1 dimension: pixels
+pixels = image.flatten()
+
+# Display a histogram of the pixels in the bottom subplot
+plt.subplot(2,1,2)
+pdf = plt.hist(pixels, bins=64, range=(0,256), normed=False,
+               color='red', alpha=0.4)
+plt.grid('off')
+
+# Use plt.twinx() to overlay the CDF in the bottom subplot
+plt.twinx()
+
+# Display a cumulative histogram of the pixels
+cdf = plt.hist(pixels, bins=64, range=(0,256),
+               normed=True, cumulative=True,
+               color='blue', alpha=0.4)
+
+# Specify x-axis range, hide axes, add title and display plot
+plt.xlim((0,256))
+plt.grid('off')
+plt.title('PDF & CDF (original image)')
+plt.show()
+
+############ Equalizing image histogram
+# Load the image into an array: image
+image = plt.imread('640px-Unequalized_Hawkes_Bay_NZ.jpg')
+
+# Flatten the image into 1 dimension: pixels
+pixels = image.flatten()
+
+# Generate a cumulative histogram
+cdf, bins, patches = plt.hist(pixels, bins=256, range=(0,256), normed=True, cumulative=True)
+new_pixels = np.interp(pixels, bins[:-1], cdf*255)
+
+# Reshape new_pixels as a 2-D array: new_image
+new_image = pixels.reshape(image.shape)
+
+# Display the new image with 'gray' color map
+plt.subplot(2,1,1)
+plt.title('Equalized image')
+plt.axis('off')
+plt.imshow(new_image, cmap='gray')
+
+# Generate a histogram of the new pixels
+plt.subplot(2,1,2)
+pdf = plt.hist(new_pixels, bins=64, range=(0,256), normed=False,
+               color='red', alpha=0.4)
+plt.grid('off')
+
+# Use plt.twinx() to overlay the CDF in the bottom subplot
+plt.twinx()
+plt.xlim((0,256))
+plt.grid('off')
+
+# Add title
+plt.title('PDF & CDF (equalized image)')
+
+# Generate a cumulative histogram of the new pixels
+cdf = plt.hist(new_pixels, bins=64, range=(0,256),
+               cumulative=True, normed=True,
+               color='blue', alpha=0.4)
+plt.show()
+
+########### Nebula picture with RGB-values. boooooorriiiiiinggg
+
+# Load the image into an array: image
+image = plt.imread('hs-2004-32-b-small_web.jpg')
+
+# Display image in top subplot
+plt.subplot(2,1,1)
+plt.title('Original image')
+plt.axis('off')
+plt.imshow(image)
+
+# Extract 2-D arrays of the RGB channels: red, blue, green
+red, green, blue = image[:,:,0], image[:,:,1], image[:,:,2]
+
+# Flatten the 2-D arrays of the RGB channels into 1-D
+red_pixels = red.flatten()
+blue_pixels = blue.flatten()
+green_pixels = green.flatten()
+
+# Overlay histograms of the pixels of each color in the bottom subplot
+plt.subplot(2,1,2)
+plt.title('Histograms from color image')
+plt.xlim((0,256))
+plt.hist(red_pixels, bins=64, normed=True, color='red', alpha=0.2)
+plt.hist(blue_pixels, bins=64, normed=True, color='blue', alpha=0.2)
+plt.hist(green_pixels, bins=64, normed=True, color='green', alpha=0.2)
+
+# Display the plot
+plt.show()
+
+#### boooooooooooooooooooooooooooooooooorrrrrriiiiinnggg
+# Load the image into an array: image
+image = plt.imread('hs-2004-32-b-small_web.jpg')
+
+# Extract RGB channels and flatten into 1-D array
+red, blue, green = image[:,:,0], image[:,:,1], image[:,:,2]
+red_pixels = red.flatten()
+blue_pixels = blue.flatten()
+green_pixels = green.flatten()
+
+# Generate a 2-D histogram of the red and green pixels
+plt.subplot(2,2,1)
+plt.grid('off')
+plt.xticks(rotation=60)
+plt.xlabel('red')
+plt.ylabel('green')
+plt.hist2d(red_pixels, green_pixels, bins=(32,32))
+
+# Generate a 2-D histogram of the green and blue pixels
+plt.subplot(2,2,2)
+plt.grid('off')
+plt.xticks(rotation=60)
+plt.xlabel('green')
+plt.ylabel('blue')
+plt.hist2d(green_pixels, blue_pixels, bins=(32,32))
+
+# Generate a 2-D histogram of the blue and red pixels
+plt.subplot(2,2,3)
+plt.grid('off')
+plt.xticks(rotation=60)
+plt.xlabel('blue')
+plt.ylabel('red')
+plt.hist2d(blue_pixels, red_pixels, bins=(32,32))
+
+# Display the plot
+plt.show()
+
+################## IDEAS!! POSTAL CODE PROFILE
+# 1) heatmap of correlations, so that it actually works
+# 2) regression plots of correlating variables...grouped by...year?
+# 3) ...with residual plot
+# 4) All of "kind" above - ALL!
+# 5) pairplot
+# https://seaborn.pydata.org/examples/structured_heatmap.html
+
+# ...covariance matrix would be good.
+
+
+
