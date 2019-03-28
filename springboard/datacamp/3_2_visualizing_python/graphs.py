@@ -969,5 +969,182 @@ plt.show()
 
 # ...covariance matrix would be good.
 
+############################################################
+## PLOTTING DATAFRAMES
+############################################################
 
+import matplotlib as plt
+# remember - plot and show - otherwise you'll get nothing of use
+plt.plot(your_pandas_core_series) # 
+plt.show()
+your_pandas_core_series.plot()
+plt.show() # apparently this works when there is a plot object in memory
+dataframe.plot() # plots all series at once 
+plt.show() # apparently this works when there is a plot object in memory
+ # with matplotlib 
+ plt.plot(your_dataframe) #try this too
+ plt.show() # apparently this works when there is a plot object in memory
+ plt.yscale('log') # gets a logarithmic scale for separating data better from each other.
+ plt.show() # apparently this works when there is a plot object in memory
+ 
+ ## exporting plots to file to current OS dir:
+ plt.savefig('aapl.png') 
+ plt.savefig('aapl.jpg') 
+ plt.savefig('aapl.pdf')
+ 
+#### More plots
+# Create a plot with color='red'
+df.plot(color='red')
+
+# Add a title
+plt.title('Temperature in Austin')
+
+# Specify the x-axis label
+plt.xlabel('Hours since midnight August 1, 2010')
+
+# Specify the y-axis label
+plt.ylabel('Temperature (degrees F)')
+
+# Display the plot
+plt.show()
+
+### plotting all columns as subplots  etc. useful
+# Plot all columns (default)
+df.plot()
+plt.show()
+
+# Plot all columns as subplots
+df.plot(subplots=True)
+plt.show()
+
+# Plot just the Dew Point data
+column_list1 = ['Dew Point (deg F)']
+df[column_list1].plot()
+plt.show()
+
+# Plot the Dew Point and Temperature data, but not the Pressure data
+column_list2 = ['Temperature (deg F)','Dew Point (deg F)']
+df[column_list2].plot()
+plt.show()
+
+######################
+## MORE ABOUT PLOTTING
+
+import pandas as pd
+import matplotlib.pyplot as plt 
+iris = pd.read_csv('iris.csv', index_col=0) 
+print(iris.shape)
+
+## SCATTER PLOT ON DATAFRAME
+iris.plot(x='sepal_length', y='sepal_width', kind='scatter')
+plt.xlabel('sepal length (cm)')
+plt.ylabel('sepal width (cm)')
+plt.show()
+
+## BOX PLOT ON DATAFRAME
+iris.plot(y='sepal_length’, kind='box')
+plt.ylabel('sepal width (cm)') 
+plt.show(
+
+## HISTOGRAM ON DATAFRAME
+iris.plot(y='sepal_length', kind='hist')
+plt.xlabel('sepal length (cm)') 
+plt.show()
+
+# histogram customization
+bins (integer): number of intervals or bins 
+range (tuple): extrema of bins (minimum, maximum) 
+normed (boolean): whether to normalize to one  
+cumulative (boolean): compute Cumulative Distribution Function (CDF) 
+... more Matplotlib customizations - CHECK which parts of matplotlib API:s are supported by Pandas dataframe - API:s
+
+iris.plot(y='sepal_length', kind='hist', bins=30, range=(4,8), normed=True)
+plt.xlabel('sepal length (cm)') 
+plt.show()
+
+# cumulative disribution - "cumulative=True"
+iris.plot(y='sepal_length', kind='hist', bins=30, range=(4,8), cumulative=True, normed=True)
+plt.xlabel('sepal length (cm)') 
+plt.title('Cumulative distribution function (CDF)') 
+plt.show()
+
+## the histogram confusion...
+# Three different DataFrame plot idioms 
+iris.plot(kind=‘hist’)
+iris.plt.hist() 
+iris.hist()
+
+# !!! not only syntax but 
+# ALSO RESULTS DIFFER! 
+
+
+
+##### examples: line plot of 2 df columns 
+# Create a list of y-axis column names: y_columns
+y_columns = ['AAPL','IBM']
+
+# Generate a line plot
+df.plot(x='Month', y=y_columns)
+
+# Add the title
+plt.title('Monthly stock prices')
+
+# Add the y-axis label
+plt.ylabel('Price ($US)')
+
+# Display the plot
+plt.show()
+
+##### examples: scatter plot of fuel efficiency vs. horse power.
+# Generate a scatter plot
+df.plot(kind='scatter', x='hp', y='mpg', s=sizes)
+
+# Add the title
+plt.title('Fuel efficiency vs Horse-power')
+
+# Add the x-axis label
+plt.xlabel('Horse-power')
+
+# Add the y-axis label
+plt.ylabel('Fuel efficiency (mpg)')
+
+# Display the plot
+plt.show()
+
+
+
+#### Examples: line graph and box plots as subplots
+## note how the 
+# Make a list of the column names to be plotted: cols
+cols = ['weight','mpg']
+
+# Generate the line plots
+df[cols].plot(subplots=True)
+
+# Display the plot
+plt.show()
+
+#### Examples: line graph and box plots as subplots
+# Make a list of the column names to be plotted: cols
+cols = ['weight','mpg']
+
+# Generate the box plots
+df[cols].plot(kind='box', subplots=True)
+
+# Display the plot
+plt.show()
+
+
+# probability density functions (PDFs) and cumulative density functions (CDFs).
+# the instructions have a mistake, they talk about a call to "hist" - but there is a call to "plot" so wtf?
+# This formats the plots such that they appear on separate rows
+fig, axes = plt.subplots(nrows=2, ncols=1)
+
+# Plot the PDF
+df.fraction.plot(ax=axes[0], kind='hist', bins=30, normed=True, range=(0,.3))
+plt.show()
+
+# Plot the CDF
+df.fraction.plot(ax=axes[1], kind='hist', bins=30, normed=True, cumulative=True, range=(0,.3))
+plt.show()
 
