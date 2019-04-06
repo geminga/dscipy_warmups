@@ -10,7 +10,7 @@ print(date_dt)
 # from datetime object to string
 date_dt.strftime('%m/%d/%Y')
 date_dt.isoformat()
-
+ 
 # Import the datetime object from datetime
 from datetime import datetime
 
