@@ -442,3 +442,53 @@ times_tz_central = times_tz_none.dt.tz_localize('US/Central')
 # Convert the datetimes from US/Central to US/Pacific
 times_tz_pacific = times_tz_central.dt.tz_convert('US/Pacific')
 
+######## SERIES
+# Slicing and indexing series 
+df['eggs'][1:4] # eggs- sarakkeesta 1-4
+df.loc[:,'eggs':'salt']           # all rows, some columns
+df.loc['Jan':'Apr',:]             # all columns, some rows
+df.loc['Mar':'May','salt':'spam'] # a block
+
+df.iloc[2:5,1: ] # a block
+
+# lists when selecting also OK
+df.iloc[[0,4,5],0:2]
+
+## IMPORTANT
+type(df['eggs']) --> pandas.core.series.Series 
+type(df[['eggs']]) --> pandas.core.frame.DataFrame 
+
+
+### Slicing and dicing
+
+# Slice the columns from the starting column to 'Obama': left_columns
+left_columns = election.loc[:,:'Obama']
+
+# Print the output of left_columns.head()
+print(left_columns.head())
+
+# Slice the columns from 'Obama' to 'winner': middle_columns
+middle_columns = election.loc[:,'Obama':'winner']
+
+# Print the output of middle_columns.head()
+print(middle_columns.head())
+
+# Slice the columns from 'Romney' to the end: 'right_columns'
+right_columns = election.loc[:,'Romney':]
+
+# Print the output of right_columns.head()
+print(right_columns.head())
+
+
+### subselecting dataframes with list 
+# Create the list of row labels: rows
+rows = ['Philadelphia', 'Centre', 'Fulton']
+
+# Create the list of column labels: cols
+cols = ['winner', 'Obama', 'Romney']
+
+# Create the new DataFrame: three_counties
+three_counties = election.loc[rows,cols]
+
+# Print the three_counties DataFrame
+print(three_counties)
