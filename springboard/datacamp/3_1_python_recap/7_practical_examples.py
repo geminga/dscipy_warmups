@@ -129,3 +129,10 @@ crime_differences = n_state_st_crimes.difference(w_terminal_st_crimes)
 
 # Print the differences
 print(crime_differences)
+
+
+############## READING A FILE TO A PANDAS DATAFRAME FROM A CSV
+import os
+import pandas as pd
+your_dataframe = pd.read_csv("C:/Users/pathtofile")
+your_dataframe.head()

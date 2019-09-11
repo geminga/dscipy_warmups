@@ -279,4 +279,86 @@ election['turnout_zscore'] = turnout_zscore
 print(election.head())
 
 
-#### INDEX OBJECTS AND LABELED DATA 
+#### INDEXING AND RE-INDEXING OBJECTS AND LABELED DATA 
+# Re-create an index as a list 
+# ehrmagerd why is this not allowed?
+# Create the list of new indexes: new_idx
+sales.index = sales.index.str.upper()
+
+# Print the sales DataFrame
+print(sales)
+
+# BOOHOO NOT ACCEPTED. OK THEN.
+# Create the list of new indexes: new_idx
+new_idx = [i.upper() for i in sales.index]
+
+# Assign new_idx to sales.index
+sales.index = new_idx
+
+# Print the sales DataFrame
+print(sales)
+
+# NAME COLUMN SET OF DATAFRAME 
+# Assign the string 'MONTHS' to sales.index.name
+sales.index.name = 'MONTHS'
+
+# Print the sales DataFrame
+print(sales)
+
+# Assign the string 'PRODUCTS' to sales.columns.name 
+sales.columns.name = 'PRODUCTS'
+# Print the sales dataframe again
+print(sales)
+
+# PRODUCTS  eggs  salt  spam
+# MONTHS                    
+# JAN         47  12.0    17
+# FEB        110  50.0    31
+# MAR        221  89.0    72
+# APR         77  87.0    20
+# MAY        132   NaN    52
+# JUN        205  60.0    55
+
+# BUILDING AN INDEX, THEN A DATAFRAME.
+
+# Generate the list of months: months
+months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+
+# Assign months to sales.index
+sales.index = months
+
+# Print the modified sales DataFrame
+print(sales)
+
+### HIERARCHICAL INDEXING - COMPOSITE / SURROGATE KEY - "MULTI-INDEX"
+# aaa - 
+stocks.set_index(['Symbol','Date])
+
+# NOTE! If this type of index, can not say "print(df.index.name)" 
+# Must be print(df.index.names) 
+
+# SORT:
+your_dataframe = your_dataframe.sort_index() 
+# ..makes a new one actually!
+
+# Queries are then of course requiring a reference to BOTH of the indices.
+stocks.loc[('CSCO','2016-10-04')]
+
+# Just one column (Volume) out:
+stocks.loc[('CSCO','2016-10-04'), 'Volume']
+
+# calling loc with first index component only slices the data frame.
+ # and retursn all rows matching
+ 
+ # Also : slicing can be done, this returns all from CSCO through MSFT
+ stocks.loc['CSCO':'MSFT'] 
+ 
+ # Fancy indexing - see previously, return AAPL and MSFT from the said date and from there the column 'Close'
+ stocks.loc[(['AAPL','MSFT'], '2016-10-05'), 'Close']
+ 
+ # innermost index ..
+ stocks.loc[('CSCO', ['2016-10-05','2016-10-03']), :]
+ 
+ # Both indexes requires API call: all sets of data, but only from said times.
+ stocks.loc[(slice(None), slice('2016-10-03','2016-10-04']), :]
+ 
