@@ -332,7 +332,7 @@ print(sales)
 
 ### HIERARCHICAL INDEXING - COMPOSITE / SURROGATE KEY - "MULTI-INDEX"
 # aaa - 
-stocks.set_index(['Symbol','Date])
+stocks.set_index(['Symbol','Date'])
 
 # NOTE! If this type of index, can not say "print(df.index.name)" 
 # Must be print(df.index.names) 
@@ -360,5 +360,441 @@ stocks.loc[('CSCO','2016-10-04'), 'Volume']
  stocks.loc[('CSCO', ['2016-10-05','2016-10-03']), :]
  
  # Both indexes requires API call: all sets of data, but only from said times.
- stocks.loc[(slice(None), slice('2016-10-03','2016-10-04']), :]
- 
+ stocks.loc[(slice(None), slice('2016-10-03','2016-10-04')), :]
+
+# Print individual bits and range -  
+ # Print sales.loc[['CA', 'TX']]
+print(sales.loc[['CA', 'TX']])
+
+# Print sales['CA':'TX']
+print(sales['CA':'TX'])
+
+
+# Set multi-index and sort index ..or data by index?
+ # Set the index to be the columns ['state', 'month']: sales
+sales = sales.set_index(['state', 'month'])
+
+# Sort the MultiIndex: sales
+sales = sales.sort_index() 
+
+# Print the sales DataFrame
+
+
+# ...did I take a timecapsule to past? Set index, again...
+# Set the index to the column 'state': sales
+sales = sales.set_index(['state'])
+
+# Print the sales DataFrame
+print(sales)
+
+# Access the data from 'NY'
+print(sales.loc['NY'])
+
+# ...then a version with indexing multiple levels of a multi-index.
+# Just NY and month 1
+print(sales.loc['NY',1])
+
+# CA and TX and month 2
+sales.loc[[('CA',2),('TX',2)]]
+
+# Everything but only month 2 - "don't slice on first level, take "2" from second level, then return everything (:) - not a very clear API.
+print(sales.loc[(slice(None),2),:])
+
+# PIVOTING DATA FRAMES!
+df.pivot(index='sarakeJokaToimiiIndeksinä',
+         columns='TästäkinTuleeIndeksiJaSarakeJostaTuleeSarakkeet',
+         values='ööJotainTestaa')
+         
+         
+weekday, city, visitors, signups
+
+# Pivot the users DataFrame: visitors_pivot
+visitors_pivot = users.pivot(
+         index='weekday',
+         columns='city',
+         values='visitors'
+    )
+
+# Print the pivoted DataFrame
+print(visitors_pivot)
+
+## THOUGHT PAUSE:
+Original data:
+  weekday    city  visitors  signups
+0     Sun  Austin       139        7
+1     Sun  Dallas       237       12
+2     Mon  Austin       326        3
+3     Mon  Dallas       456        5
+
+# Pivot users with signups indexed by weekday and city: signups_pivot
+signups_pivot = users.pivot(
+                 index='weekday',
+                 columns='city',
+                 values='signups'
+            )
+            
+city     Austin  Dallas
+weekday                
+Mon           3       5
+Sun           7      12
+
+# Pivot users pivoted by both signups and visitors: pivot
+        pivot = users.pivot(
+                 index='weekday',
+                 columns='city'
+            )
+            
+        visitors        signups       
+city      Austin Dallas  Austin Dallas
+weekday                               
+Mon          326    456       3      5
+Sun          139    237       7     12
+
+# Stacking dataframes 
+# multi-level indexes - can't pivot. "Unstack"
+trialdatadataframe.unstack(level='gender') # will take level of index 
+
+# UNSTACKING a multi-index.
+df.unstack(level='jokusarake');
+# Hierarchical indexes. 
+
+# Swapping levels
+stacked.swaplevel
+swapped.sort_index()
+
+# MUSTA TÄÄ ON VAIKEA YMMÄRTÄÄ, OTAN TÄHÄN PALJON ESIMERKKEJÄ
+print(users)
+                visitors  signups
+city   weekday                   
+Austin Mon           326        3
+       Sun           139        7
+Dallas Mon           456        5
+       Sun           237       12
+       
+# Unstack users by 'weekday': byweekday
+byweekday = users.unstack(level='weekday')
+# OK...
+print(byweekday)
+        visitors      signups    
+weekday      Mon  Sun     Mon Sun
+city                             
+Austin       326  139       3   7
+Dallas       456  237       5  12
+
+# ..sit vaan stack takaisin...
+# Stack byweekday by 'weekday' and print it
+print(byweekday.stack(level='weekday'))
+
+                visitors  signups
+city   weekday                   
+Austin Mon           326        3
+       Sun           139        7
+Dallas Mon           456        5
+       Sun           237       12
+       
+# ..mikä tän use case on? Oon pihalla.
+
+# Ja nyt sit ei tuukkaan sama enää, mut miksi?
+print(users)
+
+                visitors  signups
+city   weekday                   
+Austin Mon           326        3
+       Sun           139        7
+Dallas Mon           456        5
+       Sun           237       12
+
+In [2]: # Unstack users by 'city': bycity
+bycity = users.unstack(level='city')
+
+# Print the bycity DataFrame
+print(bycity)
+
+# Stack bycity by 'city' and print it
+print(bycity.stack(level='city'))
+        visitors        signups       
+city      Austin Dallas  Austin Dallas
+weekday                               
+Mon          326    456       3      5
+Sun          139    237       7     12
+                visitors  signups
+weekday city                     
+Mon     Austin       326        3
+        Dallas       456        5
+Sun     Austin       139        7
+        Dallas       237       12
+
+# more manipulations:
+
+# Stack 'city' back into the index of bycity: newusers
+newusers = bycity.stack(level='city')
+
+# Swap the levels of the index of newusers: newusers
+newusers = newusers.swaplevel(0,1)
+
+# Print newusers and verify that the index is not sorted
+print(newusers)
+
+# Sort the index of newusers: newusers
+newusers = newusers.sort_index()
+
+# Print newusers and verify that the index is now sorted
+print(newusers)
+
+# Verify that the new DataFrame is equal to the original
+print(newusers.equals(users))
+
+## example: 
+print(users)
+                visitors  signups
+city   weekday                   
+Austin Mon           326        3
+       Sun           139        7
+Dallas Mon           456        5
+       Sun           237       12
+
+print(bycity)
+        visitors        signups       
+city      Austin Dallas  Austin Dallas
+weekday                               
+Mon          326    456       3      5
+Sun          139    237       7     12
+
+print(bycity.stack(level='city'))
+                visitors  signups
+weekday city                     
+Mon     Austin       326        3
+        Dallas       456        5
+Sun     Austin       139        7
+        Dallas       237       12
+
+# Stack 'city' back into the index of bycity: newusers
+newusers = bycity.stack(level='city')
+
+# Swap the levels of the index of newusers: newusers
+newusers = newusers.swaplevel(0,1)
+
+# Print newusers and verify that the index is not sorted
+print(newusers)
+
+# Sort the index of newusers: newusers
+newusers = newusers.sort.index()
+
+# Print newusers and verify that the index is now sorted
+print(newusers)
+
+# Verify that the new DataFrame is equal to the original
+print(newusers.equals(users))
+                visitors  signups
+city   weekday                   
+Austin Mon           326        3
+Dallas Mon           456        5
+Austin Sun           139        7
+Dallas Sun           237       12
+
+# Stack 'city' back into the index of bycity: newusers
+newusers = bycity.stack(level='city')
+
+# Swap the levels of the index of newusers: newusers
+newusers = newusers.swaplevel(0,1)
+
+# Print newusers and verify that the index is not sorted
+print(newusers)
+
+# Sort the index of newusers: newusers
+newusers = newusers.sort_index()
+
+# Print newusers and verify that the index is now sorted
+print(newusers)
+
+# Verify that the new DataFrame is equal to the original
+print(newusers.equals(users))
+                visitors  signups
+city   weekday                   
+Austin Mon           326        3
+Dallas Mon           456        5
+Austin Sun           139        7
+Dallas Sun           237       12
+                visitors  signups
+city   weekday                   
+Austin Mon           326        3
+       Sun           139        7
+Dallas Mon           456        5
+       Sun           237       12
+
+### MELTING Dataframes 
+pd.melt(dataframe, id_vars=['thecolumn'])
+
+# specifying value_vars enables you to define what goes where.
+# You can explicitly specify the columns that should remain in the reshaped DataFrame with id_vars, and list which columns to convert into values with value_vars
+
+pd.melt(your_dataframe, id_vars=['yourcolumn'], var_name='jotain', value_name='jotain muuta')
+
+# YET ANOTHER TRY who would ever benefit from this example?
+# Reset the index: visitors_by_city_weekday
+visitors_by_city_weekday = visitors_by_city_weekday.reset_index() 
+
+# Print visitors_by_city_weekday
+print(visitors_by_city_weekday)
+
+# Melt visitors_by_city_weekday: visitors
+visitors = pd.melt(visitors_by_city_weekday, id_vars=['weekday'], value_name='visitors')
+
+# Print visitors
+print(visitors)
+
+   city weekday  Austin  Dallas
+    0        Mon     326     456
+    1        Sun     139     237
+      weekday    city  visitors
+    0     Mon  Austin       326
+    1     Sun  Austin       139
+    2     Mon  Dallas       456
+    3     Sun  Dallas       237
+    
+    # What is the use of this?
+    
+ # Melt users: skinny
+skinny = pd.melt(users, id_vars=['visitors', 'signups'])
+
+# Print skinny
+print(skinny)
+
+   visitors  signups variable   value
+0       139        7  weekday     Sun
+1       237       12  weekday     Sun
+2       326        3  weekday     Mon
+3       456        5  weekday     Mon
+4       139        7     city  Austin
+5       237       12     city  Dallas
+6       326        3     city  Austin
+7       456        5     city  Dallas
+
+# Define a DataFrame skinny where you melt the 'visitors' and 'signups' columns of users into a single column.
+# ..this means that you put weekday and city into vars. What the fuck?
+# Melt users: skinny
+skinny = pd.melt(users, id_vars=['weekday', 'city'])
+
+# Print skinny
+print(skinny)
+
+# ..produces an unusable output.
+
+# More unusable output 
+
+# Set the new index: users_idx
+users_idx = users.set_index(['city', 'weekday'])
+
+# Print the users_idx DataFrame
+print(users_idx)
+                visitors  signups
+city   weekday                   
+Austin Sun           139        7
+Dallas Sun           237       12
+Austin Mon           326        3
+Dallas Mon           456        5
+
+# Obtain the key-value pairs: kv_pairs
+kv_pairs = pd.melt(users_idx, col_level=0)
+
+# Print the key-value pairs
+print(kv_pairs)
+
+   variable  value
+0  visitors    139
+1  visitors    237
+2  visitors    326
+3  visitors    456
+4   signups      7
+5   signups     12
+6   signups      3
+7   signups      5
+
+
+Pivoting does not work if duplicates
+# Pivot table works! 
+# print(users  )
+  weekday    city  visitors  signups
+0     Sun  Austin       139        7
+1     Sun  Dallas       237       12
+2     Mon  Austin       326        3
+3     Mon  Dallas       456        5
+
+trials.pivot_table(index='treatment',
+                    columns='gender',
+                    values='response')
+# In pivoting by default average is calculated, can be modified.
+# aggfunc='count'
+
+trials.pivot_table(index='treatment',
+                    columns='gender',
+                    values='response',
+                    aggfunc='count')
+
+
+# Create the DataFrame with the appropriate pivot table: by_city_day
+by_city_day = users.pivot_table(
+    index='weekday',
+    columns='city'
+    )
+
+# Print by_city_day
+print(by_city_day)
+
+  weekday    city  visitors  signups
+0     Sun  Austin       139        7
+1     Sun  Dallas       237       12
+2     Mon  Austin       326        3
+3     Mon  Dallas       456        5
+
+# aggregation funcs 
+
+# Use a pivot table to display the count of each column: count_by_weekday1
+count_by_weekday1 = users.pivot_table(index='weekday', aggfunc='count')
+
+# Print count_by_weekday
+print(count_by_weekday1)
+
+# Replace 'aggfunc='count'' with 'aggfunc=len': count_by_weekday2
+count_by_weekday2 = users.pivot_table(index='weekday', aggfunc=len)
+# ..note that it is not 'len'
+
+# Verify that the same result is obtained
+print('==========================================')
+print(count_by_weekday1.equals(count_by_weekday2))
+
+# Margins gives row and column sums, yeah!
+# THIS ONE IS ACTUALLY USEFUL, SO, CHECK THIS:
+
+print(users)
+
+  weekday    city  visitors  signups
+0     Sun  Austin       139        7
+1     Sun  Dallas       237       12
+2     Mon  Austin       326        3
+3     Mon  Dallas       456        5
+
+# Create the DataFrame with the appropriate pivot table: signups_and_visitors
+signups_and_visitors = users.pivot_table(index='weekday', aggfunc=sum)
+
+# Print signups_and_visitors
+print(signups_and_visitors)
+
+         signups  visitors
+weekday                   
+Mon            8       782
+Sun           19       376
+
+# Add in the margins: signups_and_visitors_total 
+signups_and_visitors_total = users.pivot_table(index='weekday', aggfunc=sum, margins=True)
+
+# Print signups_and_visitors_total
+print(signups_and_visitors_total)
+
+        signups  visitors
+weekday                   
+Mon            8       782
+Sun           19       376
+All           27      1158
+
+
