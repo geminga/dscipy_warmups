@@ -338,7 +338,7 @@ stocks.set_index(['Symbol','Date'])
 # Must be print(df.index.names) 
 
 # SORT:
-your_dataframe = your_dataframe.sort_index() 
+your_dataframe = your_dataframe.sort_index()
 # ..makes a new one actually!
 
 # Queries are then of course requiring a reference to BOTH of the indices.
@@ -747,7 +747,7 @@ print(by_city_day)
 2     Mon  Austin       326        3
 3     Mon  Dallas       456        5
 
-# aggregation funcs 
+# AGGREGATION FUNCS 
 
 # Use a pivot table to display the count of each column: count_by_weekday1
 count_by_weekday1 = users.pivot_table(index='weekday', aggfunc='count')
@@ -798,3 +798,222 @@ Sun           19       376
 All           27      1158
 
 
+# Groupby - aggregation/reduction ..counts
+sales.groupby('weekday').count()
+# ..creates a NEW dataframe. ...sum()
+sales.groupby('weekday')['bread'].sum()
+
+sales.groupby('weekday')[['bread','butter']].sum()
+
+# groupby and mean: multi-level index
+# ...paljonko kukin osti
+sales.groupby(customer)['bread'].sum()
+
+# Convert to category - looks bloody useless, but speeds up operations like groupby() - categories become index? 1
+sales['weekday'].unique()
+sales['weekday'].unique() = sales['weekday'].astype('category')
+
+# GROUP BY SYNTAX EXAMPLES, FELT STRANGE, WHICH IS STRANGE.
+
+# Group titanic by 'pclass'
+by_class = titanic.groupby('pclass')
+
+# Aggregate 'survived' column of by_class by count
+count_by_class = by_class['survived'].count()
+
+# Print count_by_class
+print(count_by_class)
+
+# Group titanic by 'embarked' and 'pclass'
+by_mult = titanic.groupby(['embarked','pclass'])
+
+# Aggregate 'survived' column of by_mult by count
+count_mult = by_mult['survived'].count()
+
+# Print count_mult
+print(count_mult)
+
+# EVEN BETTER EXAMPLE OF AGGREGATE FUNCS
+# Read life_fname into a DataFrame: life and set index to country
+life = pd.read_csv(life_fname, index_col='Country')
+
+# Read regions_fname into a DataFrame: regions
+regions = pd.read_csv(regions_fname, index_col='Country')
+
+# Group life by regions['region']: life_by_region ..err group by column of another object without a join? WTF? Where did they merge?
+life_by_region = life.groupby(regions['region'])
+
+# Print the mean over the '2010' column of life_by_region
+print(life_by_region['2010'].mean())
+
+# This looks so weird, I see it as cube with splits...
+# is it, column, then 2 values from there in the below example?
+sales.groupby('city')[['bread','butter']].max()
+# OK, ^^ groups by city and shows max values for bread and butter 
+
+# USEFUL: Several aggregates can be passed as params see below sum, mean, count 
+sales.groupby('city')[['bread','butter']].agg(['max','sum'])
+
+# CUSTOM AGGREGATION:
+# ACCEPTS ALSO UDFS AND FUNCS!!!
+"aggregate by function" !!! THIS! 
+see this:
+def data_range(series):
+    return series.max() - series.min()
+    
+sales.groupby('weekday')[['bread','butter']].agg(data_range)
+# ..returns Monday bread had the largest range (between min & max)
+        bread butter
+weekday 
+Mon     130   28
+Sun      98   25
+
+#...and then you can use the standard stuff in agg as well as your custom funcs..together
+Here, sales dataframe, group by column customers, values bread and butter 
+sales.groupby(customers)[['bread','butter']].agg({'bread':'sum', 'butter':data_range})
+
+# MAX AND MEDIAN...
+# Group titanic by 'pclass': by_class
+by_class = titanic.groupby('pclass')
+
+# Select 'age' and 'fare'
+by_class_sub = by_class[['age','fare']]
+
+# Aggregate by_class_sub by 'max' and 'median': aggregated
+aggregated = by_class_sub.agg(['max','median'])
+
+# Print the maximum age in each class
+print(aggregated.loc[:, ('age','max')])
+
+# Print the median fare in each class
+print(aggregated.loc[:, ('fare','median')])
+
+
+# FURTHAR COMPLETE EXAMPLES 
+
+# Read the CSV file into a DataFrame and sort the index: gapminder
+gapminder = pd.read_csv('gapminder.csv',index_col=['Year','region','Country']).sort_index()
+
+# Group gapminder by 'Year' and 'region': by_year_region WHAT THE HELL IS THIS "LEVEL" -PARAMETER USAGE HERE?
+by_year_region = gapminder.groupby(level=['Year','region'])
+
+# Define the function to compute spread: spread
+def spread(series):
+    return series.max() - series.min()
+
+# Create the dictionary: aggregator
+aggregator = {'population':'sum', 'child_mortality':'mean', 'gdp':spread}
+
+# Aggregate by_year_region using the dictionary: aggregated
+aggregated = by_year_region.agg(aggregator)
+
+# Print the last 6 entries of aggregated 
+print(aggregated.tail(6))
+
+
+# YET ANOTHER - YOU GOT MIXED UP, COMPARE
+# Read file: sales
+sales = pd.read_csv('sales.csv', index_col='Date', parse_dates=True)
+
+# Create a groupby object: by_day
+by_day = sales.groupby(sales.index.strftime('%a'))
+
+# Create sum: units_sum
+units_sum = by_day['Units'].sum()
+# You tried this (wrong)
+# units_sum = by_day.groupby('Units').sum()
+
+# Print units_sum
+print(units_sum)
+
+# TRANSFORMATIONS 
+# (sd from mean - this one is good - the standardization of data, will need this)
+def zscore(series):
+    return (series - series.mean()) / series.std()
+
+# DATA 
+Out[3]:
+mpg cyl displ hp weight accel yr origin name
+0 18.0 8 307.0 130 3504 12.0 70 US chevrolet chevelle malibu
+1 15.0 8 350.0 165 3693 11.5 70 US buick skylark 320
+2 18.0 8 318.0 150 3436 11.0 70 US plymouth satellite
+3 16.0 8 304.0 150 3433 12.0 70 US amc rebel sst
+4 17.0 8 302.0 140 3449 10.5 70 US ford torino
+# ...only 15 miles per gallon with biuck skylark 
+
+# OK, then they transform with the z-score and the difference vanishes - but why is this transformation beneficial? "normalized by year"
+# What?
+auto.groupby('yr')['mpg'].transform(zscore).head()
+    mpg 
+0 0.058125
+1 -0.503753
+2 0.058125
+3 -0.316460
+4 -0.129168
+
+# Then the same to a def
+def zscore_with_year_and_name(group):
+    df = pd.DataFrame(
+        {'mpg': zscore(group['mpg']),
+        'year': group['yr'],
+        'name': group['name']}
+        )
+return df
+
+# ..a def apparently is not eaten by transform, so you need "apply".
+auto.groupby('yr').apply(zscore_with_year_and_name).head()
+
+mpg name year
+0 0.058125 chevrolet chevelle malibu 70
+1 -0.503753 buick skylark 320 70
+2 0.058125 plymouth satellite 70
+3 -0.316460 amc rebel sst 70
+4 -0.129168 ford torino 70
+
+# USEFUL: filter data by outliers
+# Import zscore
+from scipy.stats import zscore
+
+# Group gapminder_2010: standardized
+standardized = gapminder_2010.groupby('region')['life','fertility'].transform(zscore)
+
+# Construct a Boolean Series to identify outliers: outliers (VERY low life, VERY high fertility)
+outliers = (standardized['life'] < -3) | (standardized['fertility'] > 3)
+
+# Filter gapminder_2010 by the outliers: gm_outliers
+gm_outliers = gapminder_2010.loc[outliers]
+
+# Print gm_outliers
+print(gm_outliers)
+
+# Inputting missing data 
+# Dealing with missing data is natural in pandas (both in using the default behavior and in defining a custom behavior). 
+
+# Filling missing data (imputation) by group
+
+# Many statistical and machine learning packages cannot determine the best action to take when missing data entries are encountered. Dealing with missing data is natural in pandas (both in using the default behavior and in defining a custom behavior). In Chapter 1, you practiced using the .dropna() method to drop missing values. Now, you will practice imputing missing values. You can use .groupby() and .transform() to fill missing data appropriately for each group.
+
+# Your job is to fill in missing 'age' values for passengers on the Titanic with the median age from their 'gender' and 'pclass'. To do this, you'll group by the 'sex' and 'pclass' columns and transform each group with a custom function to call .fillna() and impute the median value.
+
+# The DataFrame has been pre-loaded as titanic. Explore it in the IPython Shell by printing the output of titanic.tail(10). Notice in particular the NaNs in the 'age' column.
+
+
+    # Group titanic by 'sex' and 'pclass'. Save the result as by_sex_class.
+    # Write a function called impute_median() that fills missing values with the median of a series. This has been done for you.
+    # Call .transform() with impute_median on the 'age' column of by_sex_class.
+    # Print the output of titanic.tail(10). This has been done for you - hit 'Submit Answer' to see how the missing values have now been imputed.
+
+# Create a groupby object: by_sex_class
+by_sex_class = titanic.groupby(['sex','pclass'])
+
+# Write a function that imputes median
+def impute_median(series):
+    return series.fillna(series.median())
+
+# Impute age and assign to titanic['age'] ...butbutbut it can't be, impute_median expects arg..so the series flows implicitly from the by_sex_class one to an argument? WHAAAT?
+titanic.age = by_sex_class['age'].transform(impute_median)
+# OR 
+# titanic.age = by_sex_class.age.transform(impute_median)
+
+# Print the output of titanic.tail(10)
+print(titanic.tail(10))
