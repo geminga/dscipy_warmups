@@ -25,7 +25,7 @@ df = pd.read_csv('tweets.csv')
 # Initialize an empty dictionary: langs_count
 langs_count = {}
 
-# Extract column from DataFrame: col
+# Extract select column from DataFrame: col
 col = df['lang']
 
 # Iterate over lang column in DataFrame
@@ -1017,3 +1017,264 @@ titanic.age = by_sex_class['age'].transform(impute_median)
 
 # Print the output of titanic.tail(10)
 print(titanic.tail(10))
+
+
+# Group gapminder_2010 by 'region': regional
+regional = gapminder_2010.groupby('region')
+
+# Apply the disparity function on regional: reg_disp - said function has parameter (rg)..but here you don't give it any parameter. WTF?
+reg_disp = regional.apply(disparity)
+
+# Print the disparity of 'United States', 'United Kingdom', and 'China'
+print(reg_disp.loc[['United States','United Kingdom','China']])
+# FOR FUCKS SAKES WHY IS THIS NOT GOOD YOU FUCKING API FUCK: print(reg_disp.loc['United States','United Kingdom','China'])
+
+# I hate this bracket-dance, groupby has ( and then if applying func then you have [] for the grouped and func.
+# OK, this is for yearly average grouped by year, then you count mean of mpg.
+my_auto_dataframe.groupby('year')['mpg'].mean()
+
+# ..but what if we want that only for cars built by Chevrolet.
+# ...filter first, then group by. OK.
+
+split_df = my_auto_dataframe.groupby('year')['mpg'].mean()
+
+# why a "group by" *object*? Why not a new df with the grouped data?
+# ANOTHER EXAMPLE
+# Create a groupby object using titanic over the 'sex' column: by_sex
+by_sex = titanic.groupby('sex')
+
+# Call by_sex.apply with the function c_deck_survival
+c_surv_by_sex = by_sex.apply(c_deck_survival)
+
+# Print the survival rates
+print(c_surv_by_sex)
+
+
+### A GOOD TEST USE CASE
+# Read the CSV file into a DataFrame: sales
+sales = pd.read_csv('sales.csv', index_col='Date', parse_dates=True)
+
+# Group sales by 'Company': by_company
+by_company = sales.groupby('Company')
+
+# Compute the sum of the 'Units' of by_company: by_com_sum
+by_com_sum = by_company['Units'].sum()
+print(by_com_sum)
+
+# Filter 'Units' where the sum is > 35: by_com_filt
+by_com_filt = by_company.filter(lambda g:g['Units'].sum() > 35)
+print(by_com_filt)
+
+
+# Ei vaan vittu jaksa.
+
+# Filtering and grouping with .map()
+
+# You have seen how to group by a column, or by multiple columns. Sometimes, you may instead want to group by a function/transformation of a column. The key here is that the Series is indexed the same way as the DataFrame. You can also mix and match column grouping with Series grouping.
+
+# In this exercise your job is to investigate survival rates of passengers on the Titanic by 'age' and 'pclass'. In particular, the goal is to find out what fraction of children under 10 survived in each 'pclass'. You'll do this by first creating a boolean array where True is passengers under 10 years old and False is passengers over 10. You'll use .map() to change these values to strings.
+
+# Finally, you'll group by the under 10 series and the 'pclass' column and aggregate the 'survived' column. The 'survived' column has the value 1 if the passenger survived and 0 otherwise. The mean of the 'survived' column is the fraction of passengers who lived.
+
+# The DataFrame has been pre-loaded for you as titanic.
+
+# Create the Boolean Series: under10
+under10 = (titanic['age'] < 10).map({True:'under 10', False:'over 10'})
+
+# Group by under10 and compute the survival rate
+survived_mean_1 = titanic.groupby(under10)['survived'].mean()
+print(survived_mean_1)
+
+# Group by under10 and pclass and compute the survival rate
+survived_mean_2 = titanic.groupby([under10, 'pclass'])['survived'].mean()
+print(survived_mean_2)
+
+
+# # # The olympic medal dataset with index 
+USA_edition_grouped = medals.loc[medals.NOC == 'USA'].groupby('Edition')
+
+# Select the 'NOC' column of medals: country_names (but how do I get countries in then?)
+country_names = medals['NOC']
+
+# Count the number of medals won by each country: medal_counts (why is it not count() here but value_counts()?)
+medal_counts = country_names.value_counts() 
+
+# Print top 15 countries ranked by medals
+print(medal_counts.head(15))
+
+
+#### Pivot table, aggregating by count 
+# Construct the pivot table: counted
+counted = medals.pivot_table(index='NOC',
+                    columns='Medal',
+                    values='Athlete',
+                    aggfunc='count')
+
+# Create the new column: counted['totals']
+counted['totals'] = counted.sum(axis='columns')
+
+# Sort counted by the 'totals' column
+counted = counted.sort_values('totals', ascending=False)
+
+# Print the top 15 rows of counted
+print(counted.head(15))
+
+### REMOVE DUPLICATES, PRINT UNIQUES
+# Select columns: ev_gen
+ev_gen = medals[['Event_gender', 'Gender']]
+
+# Drop duplicate pairs: ev_gen_uniques
+ev_gen_uniques = ev_gen.drop_duplicates()
+
+# Print ev_gen_uniques
+print(ev_gen_uniques)
+
+# # Find errors with .groupby()
+# Group medals by the two columns: medals_by_gender
+medals_by_gender = medals.groupby(['Event_gender','Gender'])
+
+# Create a DataFrame with a group count: medal_count_by_gender
+medal_count_by_gender = medals_by_gender.count()
+
+# Print medal_count_by_gender
+print(medal_count_by_gender)
+
+                     City  Edition  Sport  Discipline  Athlete    NOC  Event  Medal
+Event_gender Gender                                                                 
+M            Men     20067    20067  20067       20067    20067  20067  20067  20067
+W            Men         1        1      1           1        1      1      1      1
+             Women    7277     7277   7277        7277     7277   7277   7277   7277
+X            Men      1653     1653   1653        1653     1653   1653   1653   1653
+             Women     218      218    218         218      218    218    218    218
+
+### Find out offending row 
+# Create the Boolean Series: sus
+sus = (medals['Event_gender'] == 'W') & (medals['Gender'] == 'Men')
+
+# Create a DataFrame with the suspicious row: suspect
+suspect = medals.loc[sus]
+
+# Print suspect
+print(suspect)
+
+        City  Edition      Sport Discipline            Athlete  NOC Gender     Event Event_gender   Medal
+23675  Sydney     2000  Athletics  Athletics  CHEPCHUMBA, Joyce  KEN    Men  marathon            W  Bronze
+
+# Ranking of distinct events, top file countries winning medals and comparing cold war rivals
+idxmax() - row or column label where max
+idxmin() - row or column label where min
+
+weather.idxmax() - if table with MONTH column and months in rows, will return monthname with max temp.
+
+If months in columns and values underneath them, put idxmax(axis='columns')
+weather.T.idxmax (T maybe temp?)
+
+
+# Group medals by 'NOC': country_grouped
+country_grouped = medals.groupby('NOC')
+
+# Compute the number of distinct sports in which each country won medals: Nsports
+Nsports = country_grouped['Sport'].nunique()
+
+# Sort the values of Nsports in descending order
+Nsports = Nsports.sort_values(ascending=False)
+
+# Print the top 15 rows of Nsports
+print(Nsports.head(15))
+
+### Select data with two boolean series THIS LOOKS USEFUL 
+# Create a Boolean Series that is True when 'Edition' is between 1952 and 1988: during_cold_war
+during_cold_war = (medals['Edition'] >= 1952) & (medals['Edition'] <= 1988)
+
+# Extract rows for which 'NOC' is either 'USA' or 'URS': is_usa_urs
+is_usa_urs = medals.NOC.isin(['USA','URS'])
+
+# Use during_cold_war and is_usa_urs to create the DataFrame: cold_war_medals
+cold_war_medals = medals.loc[during_cold_war & is_usa_urs]
+
+# Group cold_war_medals by 'NOC'
+country_grouped = cold_war_medals.groupby('NOC')
+
+# Create Nsports
+Nsports = country_grouped['Sport'].nunique().sort_values(ascending=False)
+
+# Print Nsports
+print(Nsports)
+
+
+### Check out how many times a country in USA, URS got most medals during cold war 
+
+# Create the pivot table: medals_won_by_country
+medals_won_by_country = medals.pivot_table(index='Edition',
+columns='NOC', values='Athlete', aggfunc='count')
+
+# Slice medals_won_by_country: cold_war_usa_urs_medals
+cold_war_usa_urs_medals = medals_won_by_country.loc[1952:1988, ['USA','URS']]
+
+# Create most_medals 
+most_medals = cold_war_usa_urs_medals.idxmax(axis='columns')
+
+# Print most_medals.value_counts()
+print(most_medals.value_counts())
+
+### PLOTS FROM DATAFRAMES 
+Remember that *indexes are handy, since they end up as plot axis labels*
+
+Problem: Groupby creates multi-level indices, and matplotlib does not handle them well...so you will need the bloody "unstack"
+"reshaping"
+Distinct columns create distinct lineplots, hence
+
+IMPORTANT:
+Use indexes, they will be the axes.
+Put your data to columns by the index, you will get separate graphs easily.
+(why use Python as a plotting tool?)
+
+EN OIS OSANNU
+# Create the DataFrame: usa
+usa = medals[medals.NOC == 'USA']
+
+# Group usa by ['Edition', 'Medal'] and aggregate over 'Athlete'
+usa_medals_by_year = usa.groupby(['Edition', 'Medal'])['Athlete'].count()
+
+# Reshape usa_medals_by_year by unstacking
+usa_medals_by_year = usa_medals_by_year.unstack(level='Medal')
+
+# Plot the DataFrame usa_medals_by_year
+usa_medals_by_year.plot()
+plt.show()
+
+...creates a line plot.
+
+Now an area plot.
+
+
+# Create the DataFrame: usa
+usa = medals[medals.NOC == 'USA']
+
+# Group usa by 'Edition', 'Medal', and 'Athlete'
+usa_medals_by_year = usa.groupby(['Edition', 'Medal'])['Athlete'].count()
+
+# Reshape usa_medals_by_year by unstacking
+usa_medals_by_year = usa_medals_by_year.unstack(level='Medal')
+
+# Create an area plot of usa_medals_by_year
+usa_medals_by_year.plot.area()
+plt.show()
+
+# # # CATEGORIES IN THE ORDER YOU WANT TO THE GRAPH 
+# Redefine 'Medal' as an ordered categorical
+medals.Medal = pd.Categorical(values = medals.Medal, categories=['Bronze', 'Silver', 'Gold'], ordered=True)
+
+# Create the DataFrame: usa
+usa = medals[medals.NOC == 'USA']
+
+# Group usa by 'Edition', 'Medal', and 'Athlete'
+usa_medals_by_year = usa.groupby(['Edition', 'Medal'])['Athlete'].count()
+
+# Reshape usa_medals_by_year by unstacking
+usa_medals_by_year = usa_medals_by_year.unstack(level='Medal')
+
+# Create an area plot of usa_medals_by_year
+usa_medals_by_year.plot.area()
+plt.show()
+
